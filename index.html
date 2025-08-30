@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Proyectos Web</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            text-align: center;
+            padding: 2.5rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 60%);
+            transform: rotate(30deg);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.8rem;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .author {
+            margin-top: 0.5rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: block;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.8rem;
+            border: none;
+            background-color: #fff;
+            color: #6e8efb;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: #6e8efb;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(106, 142, 251, 0.3);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.2rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.08);
+        }
+
+        .project-info {
+            padding: 1.8rem;
+        }
+
+        .project-info h3 {
+            margin-bottom: 0.8rem;
+            color: #2d3748;
+            font-size: 1.4rem;
+        }
+
+        .project-info p {
+            color: #4a5568;
+            margin-bottom: 1.2rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag {
+            background-color: #f0f0f0;
+            color: #555;
+            padding: 0.4rem 0.9rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .tag.html {
+            background-color: #fff4e6;
+            color: #e34c26;
+        }
+
+        .tag.css {
+            background-color: #e6f3ff;
+            color: #2965f1;
+        }
+
+        .tag.js {
+            background-color: #fffce6;
+            color: #d6ba01;
+        }
+
+        .project-buttons {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .demo-btn {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.4rem;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex: 1;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(106, 142, 251, 0.3);
+        }
+        
+        .demo-btn:hover {
+            background: linear-gradient(135deg, #5d7df0, #9666d8);
+            box-shadow: 0 6px 12px rgba(106, 142, 251, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .code-btn {
+            background: #f0f0f0;
+            color: #666;
+            border: none;
+            padding: 0.7rem 1.4rem;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .code-btn:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2.5rem;
+            background: linear-gradient(135deg, #2d3748, #4a5568);
+            color: white;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.2rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.4rem;
+            transition: transform 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .project-buttons {
+                flex-direction: column;
+            }
+            
+            .filter-btn {
+                padding: 0.5rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Mis Proyectos Web</h1>
+        <p class="subtitle">Una colección de mis trabajos y desarrollos más recientes</p>
+        <span class="author">por GABRIEL PALACIOS CATALAN</span>
+    </header>
+
+    <div class="container">
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">
+                <i class="fas fa-th"></i> Todos
+            </button>
+            <button class="filter-btn" data-filter="html">
+                <i class="fab fa-html5"></i> HTML
+            </button>
+            <button class="filter-btn" data-filter="css">
+                <i class="fab fa-css3-alt"></i> CSS
+            </button>
+            <button class="filter-btn" data-filter="javascript">
+                <i class="fab fa-js"></i> JavaScript
+            </button>
+        </div>
+
+        <div class="projects-grid">
+            <!-- Proyecto 1 -->
+            <div class="project-card" data-tags="html css">
+                <div class="project-image">
+                    <img src="pan.jpeg" alt="Panadería">
+                </div>
+                <div class="project-info">
+                    <h3>PANADERÍA</h3>
+                    <p>Diseño de una página de inicio para una panadería digital con catálogo de productos y sistema de pedidos en línea.</p>
+                    <div class="tags">
+                        <span class="tag html">HTML</span>
+                        <span class="tag css">CSS</span>
+                    </div>
+                    <div class="project-buttons">
+                        <a href="pan.html" class="demo-btn" target="_blank">
+                            <i class="fas fa-external-link-alt"></i> Ver Demo
+                        </a>
+                        <a href="#" class="code-btn">
+                            <i class="fas fa-code"></i> Código
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Proyecto 2 -->
+            <div class="project-card" data-tags="html css javascript">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Gestor de Tareas">
+                </div>
+                <div class="project-info">
+                    <h3>Gestor de Tareas</h3>
+                    <p>Aplicación para gestionar tareas diarias con almacenamiento local, categorías y recordatorios.</p>
+                    <div class="tags">
+                        <span class="tag html">HTML</span>
+                        <span class="tag css">CSS</span>
+                        <span class="tag js">JavaScript</span>
+                    </div>
+                    <div class="project-buttons">
+                        <a href="tareas.html" class="demo-btn">
+                            <i class="fas fa-external-link-alt"></i> Ver Demo
+                        </a>
+                        <a href="#" class="code-btn">
+                            <i class="fas fa-code"></i> Código
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Proyecto 3 -->
+            <div class="project-card" data-tags="html css">
+                <div class="project-image">
+                    <img src="farma.jpg" alt="Farmacia">
+                </div>
+                <div class="project-info">
+                    <h3>FARMACIA</h3>
+                    <p>Medicamentos y consultas a tiempo. Plataforma con información de medicamentos y servicio de consultas en línea.</p>
+                    <div class="tags">
+                        <span class="tag html">HTML</span>
+                        <span class="tag css">CSS</span>
+                    </div>
+                    <div class="project-buttons">
+                        <a href="https://www.youtube.com/watch?v=VBb3gXTH4cw&list=PL283FAE67E2BBEC4B&index=5" class="demo-btn" target="_blank">
+                            <i class="fas fa-external-link-alt"></i> Ver Demo
+                        </a>
+                        <a href="#" class="code-btn">
+                            <i class="fas fa-code"></i> Código
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Proyecto 4 -->
+            <div class="project-card" data-tags="javascript">
+                <div class="project-image">
+                    <img src="este1.jpg" alt="Belleza">
+                </div>
+                <div class="project-info">
+                    <h3>BELLEZA</h3>
+                    <p>Encuentra tu estilo perfecto. Catálogo de productos de belleza con recomendaciones personalizadas.</p>
+                    <div class="tags">
+                        <span class="tag js">JavaScript</span>
+                    </div>
+                    <div class="project-buttons">
+                        <a href="estetica.html" class="demo-btn" target="_blank">
+                            <i class="fas fa-external-link-alt"></i> Ver Demo
+                        </a>
+                        <a href="#" class="code-btn">
+                            <i class="fas fa-code"></i> Código
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Proyecto 5 -->
+            <div class="project-card" data-tags="html css javascript">
+                <div class="project-image">
+                    <img src="corte.jpg" alt="Estética">
+                </div>
+                <div class="project-info">
+                    <h3>ESTÉTICA</h3>
+                    <p>Consulta el corte perfecto. Sistema de agendamiento de citas para servicios de estética y peluquería.</p>
+                    <div class="tags">
+                        <span class="tag html">HTML</span>
+                        <span class="tag css">CSS</span>
+                        <span class="tag js">JavaScript</span>
+                    </div>
+                    <div class="project-buttons">
+                        <a href="corte.html" class="demo-btn">
+                            <i class="fas fa-external-link-alt"></i> Ver Demo
+                        </a>
+                        <a href="#" class="code-btn">
+                            <i class="fas fa-code"></i> Código
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Proyecto 6 -->
+            <div class="project-card" data-tags="css">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1541462608143-67571c6738dd?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Animaciones CSS">
+                </div>
+                <div class="project-info">
+                    <h3>Galería con Animaciones CSS</h3>
+                    <p>Efectos visuales y transiciones creados puramente con CSS para una experiencia de usuario atractiva.</p>
+                    <div class="tags">
+                        <span class="tag css">CSS</span>
+                    </div>
+                    <div class="project-buttons">
+                        <a href="galeria.html" class="demo-btn">
+                            <i class="fas fa-external-link-alt"></i> Ver Demo
+                        </a>
+                        <a href="#" class="code-btn">
+                            <i class="fas fa-code"></i> Código
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Mis Proyectos Web. Todos los derechos reservados.</p>
+            <p>Desarrollado con <i class="fas fa-heart" style="color: #e53e3e;"></i> por Gabriel Palacios Catalan</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Filtrado de proyectos
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const projectCards = document.querySelectorAll('.project-card');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remover clase active de todos los botones
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Añadir clase active al botón clickeado
+                    button.classList.add('active');
+
+                    const filterValue = button.getAttribute('data-filter');
+
+                    projectCards.forEach(card => {
+                        if (filterValue === 'all' || card.getAttribute('data-tags').includes(filterValue)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Efecto de carga inicial
+            setTimeout(() => {
+                projectCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100 * index);
+                });
+            }, 300);
+
+            // Inicializar opacidad y posición para la animación
+            projectCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            });
+
+            // Simular clic en los botones de código (solo para ejemplo)
+            document.querySelectorAll('.code-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const projectTitle = this.closest('.project-info').querySelector('h3').textContent;
+                    alert(`Mostrando código de: ${projectTitle}\n\n(Esta es una demostración, en un caso real se enlazaría al repositorio de GitHub)`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
